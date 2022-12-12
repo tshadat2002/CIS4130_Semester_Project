@@ -17,6 +17,8 @@ from sklearn.model_selection import train_test_split
 from yellowbrick.classifier import ROCAUC
 from yellowbrick.classifier import ClassificationReport
 from yellowbrick.classifier import ClassPredictionError
+import matplotlib.pyplot as plt
+
 
 
 #connecting to S3 bucket
@@ -150,6 +152,61 @@ print("Yellowbrick Score:")
 print(visualizer.score(X_test, y_test))
 print("Saving image")
 visualizer.show(outpath = "classpredictor.png")
+
+#Class Count Visualization
+classes = {'Familyguy': 17504, 'Gumball': 12008, 
+             'Tsubasa': 14712, 'adventure_time': 15027, 
+             'catdog': 12465, 'pokemon': 14569, 'smurfs': 14906, 
+             'southpark': 12196, 'spongebob': 12970, 'tom_and_jerry': 11370}
+
+labels = list(classes.keys())
+values = list(classes.values())
+fig = plt.figure(figsize = (20, 5))
+ 
+# creating the bar plot
+plt.bar(labels, values, color ='maroon',
+        width = 0.4, label = values)
+ 
+plt.xlabel("Cartoon")
+plt.ylabel("Number of Images")
+plt.title("Class Count")
+
+# function to add value labels
+def addlabels(x,y):
+    for i in range(len(x)):
+        plt.text(i, y[i], y[i], ha = 'center', bbox = dict(facecolor = 'white', alpha =.8))
+
+addlabels(labels, values)
+
+plt.show()
+
+#Training + Testing Data Overview
+labels = ["Total", "Training Images", "Test Images"]
+values = [137727, 119617, 18110]
+fig = plt.figure(figsize = (20, 5))
+ 
+# creating the bar plot
+plt.bar(labels, values, color ='blue',
+        width = 0.4)
+ 
+plt.xlabel("Data Separation")
+plt.ylabel("Number of Images")
+plt.title("Overview")
+
+# function to add value labels
+def addlabels(x,y):
+    for i in range(len(x)):
+        plt.text(i, y[i], y[i], ha = 'center', bbox = dict(facecolor = 'white', alpha =.8))
+
+addlabels(labels, values)
+
+plt.show()
+
+
+
+
+
+
 
 
 
